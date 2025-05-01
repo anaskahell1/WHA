@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إرسال رسالة عبر WhatsApp</title>
+</head>
+<body>
+<h2>إرسال رسالة عبر WhatsApp</h2>
+<form id="sendMessageForm">
+    <label for="number">رقم الهاتف:</label>
+    <input type="text" id="number" placeholder="رقم الهاتف" required><br><br>
+    <label for="message">الرسالة:</label><br>
+    <textarea id="message" rows="4" placeholder="اكتب الرسالة هنا" required></textarea><br><br>
+    <button type="submit">إرسال</button>
+</form>
+
+<script>
+    document.getElementById('sendMessageForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const number = document.getElementById('number').value;
+        const message = document.getElementById('message').value;
+
+        fetch('http://localhost:3000/send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ number, message }),
+        })
+            .then((response) => response.json())
+            .then((data) => alert('تم إرسال الرسالة بنجاح!'))
+            .catch((error) => alert('فشل في إرسال الرسالة.'));
+    });
+</script>
+</body>
+</html>
